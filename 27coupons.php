@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: 27coupons
-Plugin URI: http://www.diffion.com/widgets/
-Description: This plugin will create a widget which will display latest discount coupons and deals of Indian e-commerce websites from 27coupons.com. You can customize the plugin to change the title and number of deals to be displayed. 
-Version: 1.0
+Plugin URI: http://www.27coupons.com/wp-widget/
+Description: You can create a widgets which will display latest discount coupons and deals of Indian e-commerce websites from 27coupons.com. The plugin can be customized to change the title and number of deals displayed in the widget. You can also monetize this widget. Please visit our webiste to know more.
+Version: 2.0
 Author: diffion
 Author URI: http://www.diffion.com
 License: GPL2
 */
-/*  Copyright 2012  27coupons  (email : contact@27coupons.com)
+/*  Copyright 2012  27coupons  (email : cs@27coupons.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -27,14 +27,15 @@ class CouponsWidget extends WP_Widget
 {
   function CouponsWidget()
   {
-    $widget_ops = array('classname' => 'CouponsWidget', 'description' => 'Displays latest discount coupons and deals of Indian stores.' );
+    $widget_ops = array('classname' => 'CouponsWidget', 'description' => 'Displays latest discount coupons and deals of Indian stores from 27coupons.com.' );
     $this->WP_Widget('CouponsWidget', 'Latest Discount Coupons & Deals', $widget_ops);
   }
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '' ), array( 'api_key' => '' ) );
     $title = $instance['title'];
+	$api_key = $instance['api_key'];
 ?>
   <p><label for="<?php echo $this->get_field_id('title'); ?>">Title: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label></p>
   
@@ -46,6 +47,11 @@ class CouponsWidget extends WP_Widget
 				<option <?php if ( '15' == $instance['num_coupons'] ) echo 'selected="selected"'; ?>>15</option>
 	</select>
 	</p>
+	
+	<p><label for="<?php echo $this->get_field_id('api_key'); ?>">API Key: <input class="widefat" id="<?php echo $this->get_field_id('api_key'); ?>" name="<?php echo $this->get_field_name('api_key'); ?>" type="text" value="<?php echo attribute_escape($api_key); ?>" /></label></p>
+	
+	<a style="text-decoration:none;" href="http://www.27coupons.com/wp-widget/" target="_blank">Click here to monetize this widget.</a>
+	
 <?php
   }
  
@@ -53,6 +59,7 @@ class CouponsWidget extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
+	$instance['api_key'] = $new_instance['api_key'];
 	$instance['num_coupons'] = $new_instance['num_coupons'];
 	
     return $instance;
@@ -65,12 +72,13 @@ class CouponsWidget extends WP_Widget
 	echo $before_widget;
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	$num_coupons = empty($instance['num_coupons']) ? '7' : $instance['num_coupons'];
-	
+	$api_key = empty($instance['api_key']) ? '615e26b167eba5788883d18e8dfef0329013daa3d7f9619e92b6da2c1a3a32a8b5106bb8e792d78aa2e6cfb0069e1147a0ba718b134ff2817bd41235061f6bcf' : $instance['api_key'];
+
     if (!empty($title))
       echo $before_title . $title . $after_title;;
- 
+	
     // WIDGET CODE GOES HERE
-	$api_url='http://www.27coupons.com/apps/widgets/latest_deals/get_wp_deals.php?referrer='.$_SERVER['HTTP_HOST'].'&widget_coupons='.$num_coupons;
+	$api_url='http://api.27coupons.com/v1.0/wp/get-coupons/?key='.$api_key.'&limit='.$num_coupons;
 	$ch = curl_init($api_url);
 	curl_setopt($ch,  CURLOPT_HTTPGET, 1);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
