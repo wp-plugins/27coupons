@@ -4,7 +4,7 @@ Tags: 27coupons, discount coupons, shopping deals, india shopping, india deals, 
 Requires at least: 2.8.2
 Tested up to: 3.5.2
 
-This plugin will create a widget which will display latest discount coupons and deals of Indian e-commerce websites from 27coupons.com. You can also monetize this widget. Please visit our webiste to know more.
+This plugin will create a widget which will display latest discount coupons and deals of Indian e-commerce websites from 27coupons.com.
 
 == Description ==
 
