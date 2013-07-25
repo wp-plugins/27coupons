@@ -2,7 +2,7 @@
 /*
 Plugin Name: 27coupons
 Plugin URI: http://www.27coupons.com/wp-widget/
-Description: You can create a widgets which will display latest discount coupons and deals of Indian e-commerce websites from 27coupons.com. You can also monetize this widget.
+Description: You can create a widgets which will display latest discount coupons and deals of Indian e-commerce websites from 27coupons.com.
 Version: 2.1
 Author: diffion
 Author URI: http://www.diffion.com
