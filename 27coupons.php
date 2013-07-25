@@ -70,13 +70,13 @@ class CouponsWidget extends WP_Widget
     extract($args, EXTR_SKIP);
 	
 	echo $before_widget;
-    $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+    $title = empty($instance['title']) ? ' Latest Coupons & Deals ' : apply_filters('widget_title', $instance['title']);
 	$num_coupons = empty($instance['num_coupons']) ? '7' : $instance['num_coupons'];
 	$api_key = empty($instance['api_key']) ? '615e26b167eba5788883d18e8dfef0329013daa3d7f9619e92b6da2c1a3a32a8b5106bb8e792d78aa2e6cfb0069e1147a0ba718b134ff2817bd41235061f6bcf' : $instance['api_key'];
 
     if (!empty($title))
-      echo $before_title . $title . $after_title;;
-	
+      echo $before_title . $title . $after_title;
+
     // WIDGET CODE GOES HERE
 	$api_url='http://api.27coupons.com/v1.0/wp/get-coupons/?key='.$api_key.'&limit='.$num_coupons;
 	$ch = curl_init($api_url);
